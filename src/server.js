@@ -4,6 +4,7 @@ const fs = require('fs');
 
 const key = fs.readFileSync(__dirname+'/config/certs/selfsigned.key','ascii');
 const cert = fs.readFileSync(__dirname+'/config/certs/selfsigned.crt','ascii');
+
 const options = {
     key: key,
     cert: cert
