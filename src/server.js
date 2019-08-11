@@ -1,4 +1,14 @@
 const express = require('express');
+const https = require('https');
+const fs = require('fs');
+
+const key = fs.readFileSync(__dirname+'/config/certs/selfsigned.key','ascii');
+const cert = fs.readFileSync(__dirname+'/config/certs/selfsigned.crt','ascii');
+const options = {
+    key: key,
+    cert: cert
+}
+
 const routes = require('./routes');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -13,4 +23,7 @@ server.use(cors());
 server.use(express.json());
 server.use(routes);
 
-server.listen(3333);
+const serverSec = https.createServer(options, server);
+
+server.listen(process.env.PORT || 3000);
+serverSec.listen(process.env.PORT || 3333);
